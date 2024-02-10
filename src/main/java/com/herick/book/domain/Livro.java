@@ -8,39 +8,39 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "livro")
-public class Livros implements Serializable{
+public class Livro implements Serializable {
 
-	
 	private static final long serialVersionUID = 3385201547387412077L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
-	private String tirulo;
-	@NotNull
-	@Column(name = "nome_autor")
+	private String titulo;
 	private String nomeAutor;
-	@NotNull
 	private String texto;
-	
-	@OneToMany(mappedBy = "categoria")
-	private Categorias categorias;
 
-	public Livros(Long id, @NotNull String tirulo, @NotNull String nomeAutor, @NotNull String texto) {
+	@ManyToOne
+	@JoinColumn(name = "categoria_id")
+	private Categoria categoria;
+
+
+	public Livro(Long id, String titulo, String nomeAutor, String texto, Categoria categoria) {
 		super();
 		this.id = id;
-		this.tirulo = tirulo;
+		this.titulo = titulo;
 		this.nomeAutor = nomeAutor;
 		this.texto = texto;
+		this.categoria = categoria;
 	}
 
-	public Livros() {
+	public Livro() {
 		super();
 	}
 
@@ -52,12 +52,12 @@ public class Livros implements Serializable{
 		this.id = id;
 	}
 
-	public String getTirulo() {
-		return tirulo;
+	public String getTitulo() {
+		return titulo;
 	}
 
-	public void setTirulo(String tirulo) {
-		this.tirulo = tirulo;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getNomeAutor() {
@@ -76,13 +76,15 @@ public class Livros implements Serializable{
 		this.texto = texto;
 	}
 
-	public Categorias getCategorias() {
-		return categorias;
+
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
-	public void setCategorias(Categorias categorias) {
-		this.categorias = categorias;
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -97,7 +99,7 @@ public class Livros implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Livros other = (Livros) obj;
+		Livro other = (Livro) obj;
 		return Objects.equals(id, other.id);
 	}
 

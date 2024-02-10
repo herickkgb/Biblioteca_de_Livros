@@ -12,31 +12,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "categorias")
-public class Categorias implements Serializable{
+public class Categoria implements Serializable{
 	
 	private static final long serialVersionUID = 1938571044067102230L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name = "nome")
 	private String nome;
-	@Column(name = "descricao")
 	private String descricao;
+	
+	@OneToMany(mappedBy = "categoria")
+	private List<Livro> livros = new ArrayList<>();
 
-	@ManyToOne
-	@JoinColumn(name = "categoria_id")
-	private List<Livros> livros = new ArrayList<>();
-
-	public Categorias() {
+	public Categoria() {
 		super();
 	}
 
-	public Categorias(Long id, String nome, String descricao) {
-		super();
+	public Categoria(Long id, String nome, String descricao) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
@@ -66,6 +63,14 @@ public class Categorias implements Serializable{
 		this.descricao = descricao;
 	}
 
+	public List<Livro> getLivros() {
+		return livros;
+	}
+
+	public void setLivros(List<Livro> livros) {
+		this.livros = livros;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(descricao);
@@ -79,7 +84,7 @@ public class Categorias implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categorias other = (Categorias) obj;
+		Categoria other = (Categoria) obj;
 		return Objects.equals(descricao, other.descricao);
 	}
 
