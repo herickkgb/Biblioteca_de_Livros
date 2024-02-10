@@ -1,5 +1,6 @@
 package com.herick.book.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -13,8 +14,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "livro")
-public class Livros {
+public class Livros implements Serializable{
 
+	
+	private static final long serialVersionUID = 3385201547387412077L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -25,7 +28,8 @@ public class Livros {
 	private String nomeAutor;
 	@NotNull
 	private String texto;
-	@OneToMany
+	
+	@OneToMany(mappedBy = "categoria")
 	private Categorias categorias;
 
 	public Livros(Long id, @NotNull String tirulo, @NotNull String nomeAutor, @NotNull String texto) {
