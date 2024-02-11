@@ -6,14 +6,12 @@ public class StandartError {
 	private String error;
 
 	public StandartError(Long timestamp, Integer status, String error) {
-		super();
 		this.timestamp = timestamp;
 		this.status = status;
 		this.error = error;
 	}
 
 	public StandartError() {
-		super();
 	}
 
 	public Long getTimestamp() {

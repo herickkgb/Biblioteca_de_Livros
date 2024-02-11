@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -24,6 +27,7 @@ import com.herick.book.dtos.CategoriaDTO;
 import com.herick.book.exceptions.ObjectNotFoundExceptions;
 import com.herick.book.service.CategoriaService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaController {
@@ -44,14 +48,14 @@ public class CategoriaController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Categoria> create(@RequestBody Categoria categoria) {
+	public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria categoria) {
 		categoria = service.create(categoria);
 		URI location = buildLocationUri(categoria.getId());
 		return ResponseEntity.created(location).build();
 	}
 
 	@PatchMapping(value = "/{id}")
-	private ResponseEntity<CategoriaDTO> update(@PathVariable Long id, @RequestBody CategoriaDTO entity) {
+	private ResponseEntity<CategoriaDTO> update(@PathVariable Long id,@Valid @RequestBody CategoriaDTO entity) {
 		Categoria cat = service.update(id, entity);
 		URI location = buildLocationUri(cat.getId());
 		return ResponseEntity.created(location).body(new CategoriaDTO(cat));

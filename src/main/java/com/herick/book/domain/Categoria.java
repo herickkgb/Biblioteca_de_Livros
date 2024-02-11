@@ -14,6 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.herick.book.dtos.CategoriaDTO;
 
@@ -25,7 +29,11 @@ public class Categoria implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotEmpty(message="Campo Nome Obrigatorio.")
+	@Length(min = 3, max = 100,message = "Nome deve ter entre 4 e 100 caracteres.")
 	private String nome;
+	@NotEmpty(message="Campo DESCRIÇÃO Obrigatorio.")
+	@Length(min = 3, max = 100,message = "Nome deve ter entre 4 e 200 caracteres.")
 	private String descricao;
 
 	@OneToMany(mappedBy = "categoria")
