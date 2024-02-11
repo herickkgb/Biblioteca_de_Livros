@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.herick.book.domain.Categoria;
+import com.herick.book.exceptions.ObjectNotFoundExceptions;
 import com.herick.book.service.CategoriaService;
 
 @RestController
@@ -26,7 +27,7 @@ public class CategoriaController {
 
 	@GetMapping("/{id}")
 	private Categoria findById(@PathVariable Long id) {
-		return service.findById(id).orElseThrow(() -> new RuntimeException("Recusro não encontrado para o ID:" + id));
+		return service.findById(id).orElseThrow(() -> new ObjectNotFoundExceptions("Recusro não encontrado para o ID: " + id));
 
 	}
 
