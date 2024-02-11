@@ -46,22 +46,24 @@ public class CategoriaController {
 	@PostMapping
 	public ResponseEntity<Categoria> create(@RequestBody Categoria categoria) {
 		categoria = service.create(categoria);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId())
-				.toUri();
+		URI location = buildLocationUri(categoria.getId());
 		return ResponseEntity.created(location).build();
 	}
 
-	@PutMapping(value = "/{id}")
+	@PatchMapping(value = "/{id}")
 	private ResponseEntity<CategoriaDTO> update(@PathVariable Long id, @RequestBody CategoriaDTO entity) {
 		Categoria cat = service.update(id, entity);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cat.getId())
-				.toUri();
+		URI location = buildLocationUri(cat.getId());
 		return ResponseEntity.created(location).body(new CategoriaDTO(cat));
 	}
 
-	@DeleteMapping
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	private URI buildLocationUri(Long id) {
+		return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
 	}
 }
