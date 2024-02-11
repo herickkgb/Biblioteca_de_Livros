@@ -15,17 +15,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.herick.book.dtos.CategoriaDTO;
+
 @Entity
 @Table(name = "categorias")
-public class Categoria implements Serializable{
-	
+public class Categoria implements Serializable {
+
 	private static final long serialVersionUID = 1938571044067102230L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	private String descricao;
-	
+
 	@OneToMany(mappedBy = "categoria")
 	private List<Livro> livros = new ArrayList<>();
 
@@ -38,6 +40,7 @@ public class Categoria implements Serializable{
 		this.nome = nome;
 		this.descricao = descricao;
 	}
+
 
 	public Long getId() {
 		return id;
