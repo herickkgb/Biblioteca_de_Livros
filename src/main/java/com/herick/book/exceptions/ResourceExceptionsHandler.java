@@ -44,7 +44,7 @@ public class ResourceExceptionsHandler {
 				"Erro na validação dos campos");
 
 		for (FieldError x : ex.getBindingResult().getFieldErrors()) {
-			error.addErrors(x.getField(), x.getDefaultMessage());
+			error.addErrors(x.getField(), x.getDefaultMessage() );
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
 	}
