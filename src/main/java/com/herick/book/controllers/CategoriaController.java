@@ -54,7 +54,7 @@ public class CategoriaController {
 		return ResponseEntity.created(location).build();
 	}
 
-	@PostMapping(value = "/{id}")
+	@PutMapping(value = "/{id}")
 	private ResponseEntity<CategoriaDTO> update(@PathVariable Long id,@Valid @RequestBody CategoriaDTO entity) {
 		Categoria cat = service.update(id, entity);
 		URI location = buildLocationUri(cat.getId());
