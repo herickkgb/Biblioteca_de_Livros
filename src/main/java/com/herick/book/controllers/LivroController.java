@@ -56,7 +56,7 @@ public class LivroController {
 		return ResponseEntity.created(location).body(new LivroDTO(livro));
 	}
 
-	@PatchMapping("/{id}")
+	@PostMapping("/{id}")
 	public ResponseEntity<LivroDTO> update(@PathVariable Long id, @Valid @RequestBody Livro entity) {
 		Livro livro = service.update(id, entity);
 		URI location = buildLocationUri(livro.getId());
